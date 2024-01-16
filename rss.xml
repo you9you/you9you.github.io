@@ -9,7 +9,7 @@
     <atom:link href="https://you9you.github.io/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>一些简单的记录</description>
-    <pubDate>Tue, 16 Jan 2024 02:02:04 GMT</pubDate>
+    <pubDate>Tue, 16 Jan 2024 03:46:40 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -25,7 +25,7 @@
       
       
       
-      <content:encoded><![CDATA[<h1 id="更新linux内核至-65-后无法启动-virtualbox"><a class="markdownIt-Anchor" href="#更新linux内核至-65-后无法启动-virtualbox">#</a> 更新 Linux 内核至 6.5 后无法启动 VirtualBox</h1><blockquote><p>kernel driver not installed</p></blockquote><h2 id="系统"><a class="markdownIt-Anchor" href="#系统">#</a> 系统</h2><p>Ubuntu 22.04.3 LTS</p><h2 id="排查"><a class="markdownIt-Anchor" href="#排查">#</a> 排查</h2><p>错误在更新至内核 ( <code>6.5.0-14-generic</code> ) 后出现的，尝试切换内核</p><p>切换至 <code>6.2.0-39-generic</code>  时正常</p><p>在 <code>6.5.0-14-generic</code>  中执行 <code>modprobe vboxdrv</code> ，发现 <code>FATAL: Module vboxdrv not found. </code></p><p>在 <code>6.2.0-39-generic</code>  中执行 <code>modinfo vboxdrv</code> ，查看路径 <code>filename:       /lib/modules/6.2.0-39-generic/misc/vboxdrv.ko</code></p><p>发现 <code>/lib/modules/6.5.0-14-generic/misc/</code>  不存在</p><p>查看 vbox 安装日志 <code>cat /var/log/vbox-setup.log</code> ，发现 <code>/bin/sh: 1: gcc-12: not found</code></p><h2 id="尝试修复"><a class="markdownIt-Anchor" href="#尝试修复">#</a> 尝试修复</h2><p>安装 gcc-12 <code>sudo apt install gcc-12</code></p><p>重新安装 vbox <code>sudo apt install ./virtualbox-7.0_7.0.12-159484~Ubuntu~jammy_amd64.deb</code></p>]]></content:encoded>
+      <content:encoded><![CDATA[<h1 id="更新linux内核至-65-后无法启动-virtualbox"><a class="markdownIt-Anchor" href="#更新linux内核至-65-后无法启动-virtualbox">#</a> 更新 Linux 内核至 6.5 后无法启动 VirtualBox</h1><blockquote><p>kernel driver not installed</p></blockquote><h2 id="系统"><a class="markdownIt-Anchor" href="#系统">#</a> 系统</h2><p>Ubuntu 22.04.3 LTS</p><h2 id="排查"><a class="markdownIt-Anchor" href="#排查">#</a> 排查</h2><p>错误在更新至内核 ( <code>6.5.0-14-generic</code> ) 后出现的，尝试切换内核</p><p>切换至 <code>6.2.0-39-generic</code>  时正常</p><p>在 <code>6.5.0-14-generic</code>  中执行 <code>modprobe vboxdrv</code> ，发现 <code>FATAL: Module vboxdrv not found. </code></p><p>在 <code>6.2.0-39-generic</code>  中执行 <code>modinfo vboxdrv</code> ，查看路径 <code>filename:       /lib/modules/6.2.0-39-generic/misc/vboxdrv.ko</code></p><p>发现 <code>/lib/modules/6.5.0-14-generic/misc/</code>  不存在</p><p>查看 vbox 安装日志 <code>cat /var/log/vbox-setup.log</code> ，发现 <code>/bin/sh: 1: gcc-12: not found</code></p><h2 id="尝试修复"><a class="markdownIt-Anchor" href="#尝试修复">#</a> 尝试修复</h2><p>切换至 <code>6.5.0-14-generic</code></p><p>安装 gcc-12 <code>sudo apt install gcc-12</code></p><p>重新安装 vbox <code>sudo apt install ./virtualbox-7.0_7.0.12-159484~Ubuntu~jammy_amd64.deb</code></p><p>查看模块</p><figure class="highlight bash"><figcaption data-lang="bash"></figcaption><table><tr><td data-num="1"></td><td><pre>$ <span class="token function">ls</span> /lib/modules/6.5.0-14-generic/misc/</pre></td></tr><tr><td data-num="2"></td><td><pre>vboxdrv.ko  vboxnetadp.ko  vboxnetflt.ko</pre></td></tr></table></figure><p>VirtualBox 已恢复正常</p>]]></content:encoded>
       
       
       
