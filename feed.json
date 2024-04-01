@@ -1,6 +1,8 @@
 <%- JSON.stringify({
     version: 'https://jsonfeed.org/version/1',
-    title: config.title + (tag ? ` • All posts by "${tag}" tag` : '') + (category ? ` • All posts by "${category}" category` : ''),
+    title: config.title,
+    subtitle: config.subtitle,
+    icon: full_url_for('/assets/favicon.ico'),
     description: config.description,
     home_page_url: config.url,
     items: posts.map(post => ({
@@ -9,6 +11,6 @@
         title: post.title,
         date_published: moment(post.date).toISOString(),
         content_html: post.content || '',
-        tags:  (post.tags ? post.tags.toArray() : []).map(({ name }) => name)
+        tags: [...(post.categories ? post.categories.toArray() : []).map(({ name }) => name), ...(post.tags ? post.tags.toArray() : []).map(({ name }) => name)]
     }))
 }, null, 4) _%>
